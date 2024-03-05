@@ -4,8 +4,9 @@ addpath('../Data/Lab1_data')
 
 %% load data
 
-Z = load('EEG_sig.mat').Z;
-des = load('EEG_sig.mat').des;
+data = load('EEG_sig.mat');
+Z = data.Z;
+des = data.des;
 fs = des.samplingfreq;
 ch_names = des.channelnames;
 
@@ -39,11 +40,11 @@ plot_time_sig(Z, ch_id, fs, [0, t_end], strcat('Channel-', num2str(ch_id)));
 
 %% Section 4
 
-offset = max(max(abs(Z)))/5 ;
-feq = 256 ;
-ElecName = des.channelnames ;
-disp_eeg(Z, offset, feq, ElecName) ;
-
+offset = max(max(abs(Z)))/5;
+feq = 256;
+ElecName = des.channelnames;
+disp_eeg(Z, offset, feq, ElecName);
+title(strcat('EEG with offset=', num2str(offset)))
 %% section 6
 clc; close all;
 
@@ -54,13 +55,23 @@ t_starts = [2 30 42 50];
 t_ends = [7 35 47 55];
 
 for i=1:length(t_ends)   
-   figure;
-   subplot(2,1,1)
+   subplot(4,2,2*i-1)
    plot_time_sig(Z, C3_id, fs, [t_starts(i), t_ends(i)], ...
        strcat('Time domain - Channel C3:', num2str(t_starts(i)), '-', num2str(t_ends(i))));
-   subplot(2,1,2)
+   subplot(4,2,2*i)
    plot_fft(Z, C3_id, fs, [t_starts(i), t_ends(i)], ...
        strcat('Freq domain - Channel C3:', num2str(t_starts(i)), '-', num2str(t_ends(i))), 256);
+end
+
+figure()
+for i=1:length(t_ends)   
+   subplot(4,2,2*i-1)
+   plot_time_sig(Z, C3_id, fs, [t_starts(i), t_ends(i)], ...
+       strcat('Time domain - Channel C3:', num2str(t_starts(i)), '-', num2str(t_ends(i))));
+   subplot(4,2,2*i)
+   plot_fft(Z, C3_id, fs, [t_starts(i), t_ends(i)], ...
+       strcat('Freq domain - Channel C3:', num2str(t_starts(i)), '-', num2str(t_ends(i))), 256);
+   xlim([-50 50])
 end
 
 %% Section 7
