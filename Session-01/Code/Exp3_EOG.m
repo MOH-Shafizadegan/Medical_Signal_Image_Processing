@@ -23,11 +23,10 @@ noverlap = 64;
 nfft = L;
 
 for i=1:length(labels)   
-   figure;
-   subplot(2,1,1)
+   subplot(2,2,i)
    plot_fft(sig, i, fs, [0 length(sig)/fs], ...
        strcat('Freq domain-', labels(i), ' :'), nfft);
-   subplot(2,1,2)
+   subplot(2,2,i+2)
    SpectSignal = sig(i, :) / max(abs(sig(i, :)));
    spectrogram(SpectSignal, hamming(L), noverlap, nfft, fs, 'yaxis')
    title(strcat('Spectrogram -', labels(i), ':'))
