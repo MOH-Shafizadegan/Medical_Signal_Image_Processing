@@ -112,26 +112,40 @@ end
 %% Section 9
 close all;
 
-sig = Z(C3_id, t_starts(2)*fs+1:t_ends(2)*fs);
+i = 2;
+sig = Z(C3_id, t_starts(i)*fs+1:t_ends(i)*fs);
 filt_sig = lowpass(sig, 40, fs);
 fs_new = 128;
-sig_dwnsmpl = downsample(sig, fs/fs_new);
+sig_dwnsmpl = downsample(filt_sig, fs/fs_new);
 
 figure;
-subplot(3,1,1);
+subplot(2,3,1);
 plot_time_sig(Z, C3_id, fs_new, [t_starts(i), t_ends(i)], ...
-       strcat('Time domain - Channel C3:', num2str(t_starts(2)), '-',...
+       strcat('Time domain - Channel C3 (downsampled):', num2str(t_starts(2)), '-',...
        num2str(t_ends(2))), sig_dwnsmpl);
-subplot(3,1,2);
+subplot(2,3,2);
 plot_fft(Z, C3_id, fs_new, [t_starts(i), t_ends(i)], ...
-       strcat('Freq domain - Channel C3:', num2str(t_starts(2)),...
+       strcat('Freq domain - Channel C3 (downsampled):', num2str(t_starts(2)),...
        '-', num2str(t_ends(2))), 256, sig_dwnsmpl);
-subplot(3,1,3);
+subplot(2,3,3);
 spectrogram(sig_dwnsmpl, hamming(L), noverlap, nfft, fs_new, 'yaxis')
+   title(strcat('Spectrogram - Channel C3 (downsampled):', num2str(t_starts(2)),...
+                '-', num2str(t_ends(2))))
+
+subplot(2,3,4);
+plot_time_sig(Z, C3_id, fs, [t_starts(i), t_ends(i)], ...
+       strcat('Time domain - Channel C3:', num2str(t_starts(2)), '-',...
+       num2str(t_ends(2))), sig);
+subplot(2,3,5);
+plot_fft(Z, C3_id, fs, [t_starts(i), t_ends(i)], ...
+       strcat('Freq domain - Channel C3:', num2str(t_starts(2)),...
+       '-', num2str(t_ends(2))), 256, sig);
+subplot(2,3,6);
+spectrogram(sig, hamming(L), noverlap, nfft, fs, 'yaxis')
    title(strcat('Spectrogram - Channel C3:', num2str(t_starts(2)),...
                 '-', num2str(t_ends(2))))
 
-
+            
 %% functions
 
 function plot_fft(data, id, fs, time_range, title_txt, N, sig)
