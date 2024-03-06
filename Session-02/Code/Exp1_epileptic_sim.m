@@ -70,7 +70,7 @@ title('denoised -15 SNR signal with ica');
 
 %% Section 7
 clc; close all;
-ch_id = [13, 25];
+ch_id = [13, 24];
 for i = 1:length(ch_id)
     figure()
     subplot(3,1,1)
