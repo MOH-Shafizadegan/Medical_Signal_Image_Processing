@@ -39,6 +39,7 @@ S_fetus = zeros(size(S));
 S_fetus(2,2) = S(2,2);
 
 X_fetus = U * S_fetus * V';
+save('../Report/data/X_fetus_SVD.mat', 'X_fetus')
 
 %%
 
