@@ -18,9 +18,10 @@ w_inv = inv(W);
 plot3ch(Zhat')
 
 %%
-
-plot3dv()
-
+figure()
+for i = 1:3
+    plot3dv(w_inv(:, i))
+end
 %%
 
 t = (1:length(Zhat))/fs;
