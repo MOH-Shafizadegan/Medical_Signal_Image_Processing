@@ -12,7 +12,8 @@ fs = 256;
 
 [W Zhat]=ica(X');
 w_inv = inv(W);
-save('../Report/figures/w_inv.mat', 'w_inv')
+save('../Report/data/w_inv.mat', 'w_inv')
+save('../Report/data/Zhat.mat', 'Zhat')
 
 %%  Section 2
 plot3ch(Zhat')
@@ -59,10 +60,11 @@ Z_new(1:2, :) = 0;
 X_recunst=w_inv*Z_new;
 
 fecg_recuns=X_recunst(3,:);
+save('../Report/data/fecg_recuns_ICA.mat', 'fecg_recuns')
 
 figure;
 plot(t,fecg_recuns);
 xlabel('time(sec)')
 ylabel('amp(mV)')
-title('recuntructed signal using ICA')
+title('recunstructed signal using ICA')
 ylim([-10 10])
