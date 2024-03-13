@@ -8,21 +8,23 @@ addpath('../Data/Lab3_data/matlab')
 X = load('data\X.dat');
 fs = 256;
 
-%% ICA
+%%  Section 1: ICA
 
 [W Zhat]=ica(X');
 w_inv = inv(W);
+save('../Report/figures/w_inv.mat', 'w_inv')
 
-%% 
-
+%%  Section 2
 plot3ch(Zhat')
 
-%%
 figure()
 for i = 1:3
     plot3dv(w_inv(:, i))
 end
-%%
+xlabel('x');
+ylabel('y');
+zlabel('z');
+%% Section 3
 
 t = (1:length(Zhat))/fs;
 
@@ -47,7 +49,7 @@ title('3rd source')
 
 %%% Conclusion : The 3rd source is the fetus ECG
 
-%%
+%% Section 4
 
 clc;
 
