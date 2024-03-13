@@ -30,6 +30,8 @@ clc; %close all;
 ICs_1 = W1 * data1;
 ICs_2 = W2 * data2;
 
+%% Data 1 ICA
+
 for i=1:size(data1,1)
    
     figure;
@@ -50,12 +52,33 @@ for i=1:size(data1,1)
     
 end
 
+%% Time data 1
+
+figure;
+for i=1:size(data1,1)
+   subplot(5,5,i) 
+   t = (1:length(ICs_1))/fs;
+   plot(t, ICs_1(i,:))
+   ylim([-100 100])
+   title(strcat('IC-', num2str(i)))
+end
+
 %% Topo data 1
 
 figure;
 for i=1:size(data1,1)
    subplot(5,5,i) 
    plottopomap(elocsX,elocsY,elabels,F1(:,i))
+   title(strcat('IC-', num2str(i)))
+end
+
+%% Freq data 1
+
+figure;
+for i=1:size(data1,1)
+   subplot(5,5,i) 
+   [p, f] = pwelch(ICs_1(i, :), [], [], [], fs);
+   plot(f,p);
    title(strcat('IC-', num2str(i)))
 end
 
@@ -70,10 +93,9 @@ plotEEG(data1_reconst);
 title('reconstructed NewData 1');
 
 
-%% Section 2 data 1
-clc; close all;
+%% Data 2 ICA
 
-for i=1:size(data2,1)
+for i=1:size(data1,1)
    
     figure;
     
@@ -93,6 +115,17 @@ for i=1:size(data2,1)
     
 end
 
+%% Time data 2
+
+figure;
+for i=1:size(data2,1)
+   subplot(5,5,i) 
+   t = (1:length(ICs_2))/fs;
+   plot(t, ICs_2(i,:))
+   ylim([-100 100])
+   title(strcat('IC-', num2str(i)))
+end
+
 %% Topo data 2
 
 figure;
@@ -102,11 +135,21 @@ for i=1:size(data2,1)
    title(strcat('IC-', num2str(i)))
 end
 
-%% Data 1 reconst
+%% Freq data 2
 
-delsources_2 = [1 7];
+figure;
+for i=1:size(data2,1)
+   subplot(5,5,i) 
+   [p, f] = pwelch(ICs_2(i, :), [], [], [], fs);
+   plot(f,p);
+   title(strcat('IC-', num2str(i)))
+end
+
+%% Data 2 reconst
+
+delsources = [1 7];
 F2_new = F2;
-F2_new(:, delsources_2) = 0;
+F2_new(:, delsources) = 0;
 
 data2_reconst = F2_new * ICs_2;
 plotEEG(data2_reconst);
