@@ -20,8 +20,10 @@ clc;
 
 %% Section 2
 clc;
-
-plot3dv(V(:,1), S(1:3, 1:3))
+figure
+for i = 1:3
+    plot3dv(V(:,i), S(i, i))
+end
 
 %% Section 3
 
