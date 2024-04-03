@@ -12,6 +12,7 @@ fs = 256;
 
 [W Zhat]=ica(X');
 w_inv = inv(W);
+save('../Report/data/w.mat', 'W')
 save('../Report/data/w_inv.mat', 'w_inv')
 save('../Report/data/Zhat.mat', 'Zhat')
 

@@ -11,12 +11,13 @@ load('../Report/data/X_fetus_SVD.mat')
 
 %% Section 1: comparing results
 close all
+[U,S,V] = svd(X);
+
 plot3ch(X,fs,'X');
 plot3ch(U(:,1:3),fs,'Data after SVD');
 plot3ch(Zhat.',256,'Data after ICA')
 
 figure()
-[U,S,V] = svd(X);
 for i = 1:3
     plot3dv(V(:,i).',S(i,i),'r')
     plot3dv(w_inv(:,i))
@@ -46,7 +47,7 @@ for i = 1:3
     V_norm(i) = norm(u);
 end
 disp('angles between V = ');
-disp([deg1,deg2,deg3]);
+disp([V_deg(1),V_deg(2),V_deg(3)]);
 
 disp('norms A  = ');
 disp(w_inv_norm);
