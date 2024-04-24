@@ -131,3 +131,48 @@ end
 
 %% Section 6
 
+figure;
+t = (1:10*fs) /fs - 1/fs;
+CH = 16;
+
+subplot(2,2,1)
+for i = 1:5
+    plot(t, delta_X_avg_smth(t*fs+1, CH, i), 'linewidth', 2);hold on
+end
+title('Delta')
+xlabel('time(s)')
+ylabel('Magnitude')
+legend('1', '2', '3' , '4', '5')
+
+subplot(2,2,2)
+for i = 1:5
+    plot(t, theta_X_avg_smth(t*fs+1, CH, i), 'linewidth', 2);hold on
+end
+title('Theta')
+xlabel('time(s)')
+ylabel('Magnitude')
+legend('1', '2', '3' , '4', '5')
+
+
+subplot(2,2,3)
+for i = 1:5
+    plot(t, alpha_X_avg_smth(t*fs+1, CH, i), 'linewidth', 2);hold on
+end
+title('Alpha')
+xlabel('time(s)')
+ylabel('Magnitude')
+legend('1', '2', '3' , '4', '5')
+
+
+subplot(2,2,4)
+for i = 1:5
+    plot(t, beta_X_avg_smth(t*fs+1, CH, i), 'linewidth', 2);hold on
+end
+title('Beta')
+xlabel('time(s)')
+ylabel('Magnitude')
+legend('1', '2', '3' , '4', '5')
+
+
+
+
