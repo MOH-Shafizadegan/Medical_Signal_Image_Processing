@@ -55,7 +55,7 @@ for i = 1:frame_N
     
     if feature == "medfreq"
         f_val = medfreq(seg, Fs);
-        if f_val > 3
+        if f_val > 0.1
            alarm(i) = 1; 
         else
            alarm(i) = 0;
@@ -63,6 +63,41 @@ for i = 1:frame_N
     elseif feature == "bandpower40"
         f_val = bandpower(seg, Fs, [40 80]);
         if f_val > 5
+           alarm(i) = 0; 
+        else
+           alarm(i) = 1;
+        end
+    elseif feature == "max"
+        f_val = max(seg);
+        if f_val > 320
+           alarm(i) = 0; 
+        else
+           alarm(i) = 1;
+        end
+    elseif feature == "R-peak-avg"
+        f_val = mean(findpeaks(seg));
+        if f_val > -30
+           alarm(i) = 1; 
+        else
+           alarm(i) = 0;
+        end
+    elseif feature == "meanfreq"
+        f_val = medfreq(seg, Fs);
+        if f_val > 0.5
+           alarm(i) = 1; 
+        else
+           alarm(i) = 0;
+        end
+    elseif feature == "zeros"
+        f_val = sum(seg == 0);
+        if f_val > 10
+           alarm(i) = 1; 
+        else
+           alarm(i) = 0;
+        end    
+    elseif feature == "peak-to-peak"
+        f_val = max(seg) - min(seg);
+        if f_val > 350
            alarm(i) = 0; 
         else
            alarm(i) = 1;
