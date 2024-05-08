@@ -37,8 +37,30 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 
-rand_idx = randi(length(LocMat), 1);
-vec_norm = norm(LocMat(:, rand_idx));
+dipole_loc = "deep";
+is_loc_satisf = 0;
+
+while is_loc_satisf == 0
+    rand_idx = randi(length(LocMat), 1);
+    dip_norm = norm(LocMat(:, rand_idx));
+    
+    if dipole_loc == "cortex_central"
+        is_loc_satisf = dip_norm < ModelParams.R(1) && ...
+                    dip_norm > 0.8*ModelParams.R(1) && ...
+                    (LocMat(1, rand_idx)^2 + LocMat(2, rand_idx)^2) < 5;
+    elseif dipole_loc == "cortex_temporal"
+        is_loc_satisf = dip_norm < ModelParams.R(1) && ...
+                    dip_norm > 0.8*ModelParams.R(1) && ...
+                    abs(LocMat(2, rand_idx)) > 0.8*ModelParams.R(1) && ...
+                    abs(LocMat(1, rand_idx)) < 2 && ...
+                    abs(LocMat(3, rand_idx)) < 5;
+    elseif dipole_loc == "deep"
+        is_loc_satisf = dip_norm < 0.2 * ModelParams.R(1);
+    end
+end
+
+
+vec_norm = norm(LocMat(:, rand_idx))
 quiver3(LocMat(1, rand_idx), LocMat(2, rand_idx) ,LocMat(3, rand_idx), ...
         LocMat(1, rand_idx)/vec_norm, LocMat(2, rand_idx)/vec_norm ,LocMat(3, rand_idx)/vec_norm, ...
         'linewidth', 3);
