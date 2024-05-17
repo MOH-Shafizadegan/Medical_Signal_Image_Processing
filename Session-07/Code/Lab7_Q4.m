@@ -78,3 +78,15 @@ img_rotated_fft2_dB = 10*log10(abs(img_rotated_fft2));
 img_rotated_fft2_norm = img_rotated_fft2_dB/max(max(abs(img_rotated_fft2_dB)));
 imshow(abs(img_rotated_fft2_norm))
 title('Rotated image FFT2 magnitude')
+
+%% Freq rotation
+
+img_fft2  = fftshift(fft2(ifftshift(img_s1_norm)));
+rot_img_fft2 = imrotate(img_fft2, 30);
+rot_img = abs(fftshift(ifft2(ifftshift(rot_img_fft2))));
+norm_img_rot = rot_img / max(max(rot_img));
+
+figure;
+
+imshow(norm_img_rot)
+title('Rotated image')
